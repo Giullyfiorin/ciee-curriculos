@@ -1,0 +1,416 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  font-family: "Inter", Arial, sans-serif;
+  color: #263238;
+  background: #f4f7fb;
+
+  --azul: #005ca9;
+  --azul-escuro: #00457f;
+  --azul-claro: #eaf4fc;
+  --amarelo: #f7b500;
+
+  --texto: #263238;
+  --texto-secundario: #667085;
+
+  --borda: #dce3ea;
+  --fundo: #f4f7fb;
+  --branco: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--fundo);
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* =========================
+   PÁGINA
+========================= */
+
+.pagina {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      180deg,
+      #eef6fc 0px,
+      #f7f9fc 300px,
+      #f4f7fb 100%
+    );
+}
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.cabecalho {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      120deg,
+      #004d8f 0%,
+      #006bb6 60%,
+      #0781c8 100%
+    );
+
+  padding: 54px 32px 68px;
+  color: white;
+}
+
+.cabecalho::after {
+  content: "";
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  right: -90px;
+  top: -150px;
+
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cabecalho div {
+  position: relative;
+  z-index: 1;
+
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cabecalho h1 {
+  margin: 0;
+
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 700;
+
+  letter-spacing: -0.8px;
+}
+
+.cabecalho p {
+  margin: 10px 0 0;
+
+  max-width: 620px;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* detalhe amarelo */
+
+.cabecalho h1::after {
+  content: "";
+  display: block;
+
+  width: 48px;
+  height: 4px;
+
+  margin-top: 18px;
+
+  background: var(--amarelo);
+  border-radius: 20px;
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.conteudo {
+  max-width: 900px;
+
+  margin: -32px auto 0;
+  padding: 0 32px 60px;
+
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+  background: var(--branco);
+
+  padding: 36px 40px;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(214, 222, 230, 0.8);
+
+  box-shadow:
+    0 12px 35px rgba(31, 58, 82, 0.08);
+}
+
+.card h2 {
+  margin: 0 0 28px;
+
+  color: var(--texto);
+
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* =========================
+   IMPORTAÇÃO DO PDF
+========================= */
+
+.importacao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 32px;
+  padding: 22px 24px;
+
+  background: var(--azul-claro);
+
+  border: 1px dashed #83b7db;
+  border-radius: 12px;
+}
+
+.importacao strong {
+  color: var(--azul-escuro);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.importacao p {
+  margin: 6px 0 0;
+
+  max-width: 470px;
+
+  color: #60758a;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.importacao input[type="file"] {
+  max-width: 245px;
+
+  color: #475467;
+
+  font-size: 13px;
+}
+
+.importacao input[type="file"]::file-selector-button {
+  margin-right: 10px;
+
+  padding: 9px 13px;
+
+  border: 1px solid #a9cbe3;
+  border-radius: 6px;
+
+  background: white;
+  color: var(--azul);
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.importacao input[type="file"]::file-selector-button:hover {
+  background: #f3f9fd;
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 22px;
+}
+
+.campo label {
+  margin-bottom: 8px;
+
+  color: #344054;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.campo label span {
+  color: #d92d20;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+
+  background: white;
+
+  color: var(--texto);
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: #98a2b3;
+}
+
+.campo input:hover,
+.campo textarea:hover {
+  border-color: #aebbc7;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: none;
+
+  border-color: var(--azul);
+
+  box-shadow:
+    0 0 0 3px rgba(0, 92, 169, 0.11);
+}
+
+.campo textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
+.botao-salvar {
+  min-width: 180px;
+
+  padding: 13px 22px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: var(--azul);
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 12px rgba(0, 92, 169, 0.18);
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.botao-salvar:hover {
+  background: var(--azul-escuro);
+
+  box-shadow:
+    0 6px 16px rgba(0, 92, 169, 0.23);
+}
+
+.botao-salvar:active {
+  transform: translateY(1px);
+}
+
+.botao-salvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   MENSAGENS
+========================= */
+
+.mensagem {
+  margin-bottom: 24px;
+  padding: 13px 15px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mensagem.sucesso {
+  background: #ecfdf3;
+  border: 1px solid #abefc6;
+  color: #067647;
+}
+
+.mensagem.erro {
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  color: #b42318;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 700px) {
+  .cabecalho {
+    padding: 38px 20px 54px;
+  }
+
+  .cabecalho h1 {
+    font-size: 27px;
+  }
+
+  .conteudo {
+    padding: 0 16px 40px;
+  }
+
+  .card {
+    padding: 26px 20px;
+    border-radius: 12px;
+  }
+
+  .importacao {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .importacao input[type="file"] {
+    max-width: 100%;
+  }
+
+  .botao-salvar {
+    width: 100%;
+  }
+}
