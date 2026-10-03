@@ -187,11 +187,13 @@ Preferi não colocar essas funcionalidades agora para não aumentar a complexida
 
 ## Tempo de desenvolvimento
 
-O projeto foi desenvolvido em etapas, incluindo implementação, configuração do ambiente, testes e correções.
+O desenvolvimento foi feito ao longo de 3 dias, dedicando aproximadamente 2 horas por dia, totalizando cerca de 6 horas.
 
-Não marquei o tempo exato de todas as sessões. A configuração do SQL Server foi a etapa que levou mais tempo, principalmente por causa das tentativas com LocalDB antes de chegar à configuração final com SQL Server Express.
+Dividi o trabalho em etapas para conseguir desenvolver e testar cada parte antes de continuar.
 
-Por não ter feito um controle exato das horas desde o início, preferi não colocar um número que não representasse corretamente o tempo utilizado.
+No primeiro momento foquei principalmente no backend e nas funcionalidades de cadastro e leitura do PDF. Depois desenvolvi o frontend e fiz a integração entre as duas partes. Em seguida configurei a persistência no SQL Server e, na etapa final, fiz os testes, revisões, documentação e preparação do repositório para entrega.
+
+A configuração do SQL Server foi a parte que exigiu mais tempo de investigação, principalmente pelas tentativas de conexão antes de chegar à configuração final.
 
 ## Considerações finais
 
