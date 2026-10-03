@@ -1,10 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API para cadastro de candidatos e importação de currículos em PDF",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -12,8 +13,14 @@
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
     "express": "^5.2.1",
+    "mssql": "^12.7.2",
     "multer": "^2.4.0",
     "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.3.1"
   }
 }

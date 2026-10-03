@@ -1,5 +1,33 @@
 const API_URL = "http://localhost:3000/api";
 
+export const listarCandidatos = async () => {
+  const resposta = await fetch(`${API_URL}/candidatos`);
+
+  const resultado = await resposta.json();
+
+  if (!resposta.ok) {
+    throw new Error(
+      resultado.mensagem || "Não foi possível carregar os candidatos."
+    );
+  }
+
+  return resultado;
+};
+
+export const buscarCandidatoPorId = async (id) => {
+  const resposta = await fetch(`${API_URL}/candidatos/${id}`);
+
+  const resultado = await resposta.json();
+
+  if (!resposta.ok) {
+    throw new Error(
+      resultado.mensagem || "Não foi possível carregar o candidato."
+    );
+  }
+
+  return resultado;
+};
+
 export const cadastrarCandidato = async (dados) => {
   const resposta = await fetch(`${API_URL}/candidatos`, {
     method: "POST",

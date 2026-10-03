@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 import {
+  buscarCandidatoPorId,
   cadastrarCandidato,
   extrairCurriculo,
+  listarCandidatos,
 } from "./services/api";
 
 function App() {
@@ -15,11 +17,37 @@ function App() {
     resumoProfissional: "",
   });
 
+  const [candidatos, setCandidatos] = useState([]);
+  const [candidatoSelecionado, setCandidatoSelecionado] =
+    useState(null);
+
   const [mensagem, setMensagem] = useState("");
   const [tipoMensagem, setTipoMensagem] = useState("");
 
   const [salvando, setSalvando] = useState(false);
   const [lendoPdf, setLendoPdf] = useState(false);
+  const [carregandoCandidatos, setCarregandoCandidatos] =
+    useState(true);
+  const [carregandoDetalhes, setCarregandoDetalhes] =
+    useState(false);
+
+  const carregarCandidatos = async () => {
+    try {
+      setCarregandoCandidatos(true);
+
+      const resultado = await listarCandidatos();
+
+      setCandidatos(resultado.candidatos || []);
+    } catch (erro) {
+      console.error("Erro ao carregar candidatos:", erro);
+    } finally {
+      setCarregandoCandidatos(false);
+    }
+  };
+
+  useEffect(() => {
+    carregarCandidatos();
+  }, []);
 
   const atualizarCampo = (event) => {
     const { name, value } = event.target;
@@ -59,7 +87,6 @@ function App() {
 
     try {
       const resultado = await extrairCurriculo(arquivo);
-
       const dados = resultado.dados;
 
       setFormulario((formularioAtual) => ({
@@ -110,12 +137,33 @@ function App() {
         areaInteresse: "",
         resumoProfissional: "",
       });
+
+      await carregarCandidatos();
     } catch (erro) {
       setMensagem(erro.message);
       setTipoMensagem("erro");
     } finally {
       setSalvando(false);
     }
+  };
+
+  const abrirDetalhes = async (id) => {
+    try {
+      setCarregandoDetalhes(true);
+
+      const resultado = await buscarCandidatoPorId(id);
+
+      setCandidatoSelecionado(resultado.candidato);
+    } catch (erro) {
+      setMensagem(erro.message);
+      setTipoMensagem("erro");
+    } finally {
+      setCarregandoDetalhes(false);
+    }
+  };
+
+  const fecharDetalhes = () => {
+    setCandidatoSelecionado(null);
   };
 
   return (
@@ -251,7 +299,163 @@ function App() {
             </button>
           </form>
         </section>
+
+        <section className="card card-listagem">
+          <div className="titulo-listagem">
+            <div>
+              <h2>Candidatos cadastrados</h2>
+
+              <p>
+                Consulte os candidatos cadastrados no sistema.
+              </p>
+            </div>
+
+            <span className="contador">
+              {candidatos.length}
+            </span>
+          </div>
+
+          {carregandoCandidatos ? (
+            <p className="estado-listagem">
+              Carregando candidatos...
+            </p>
+          ) : candidatos.length === 0 ? (
+            <div className="lista-vazia">
+              <strong>Nenhum candidato cadastrado</strong>
+
+              <p>
+                Os candidatos cadastrados aparecerão aqui.
+              </p>
+            </div>
+          ) : (
+            <div className="lista-candidatos">
+              {candidatos.map((candidato) => (
+                <article
+                  className="candidato"
+                  key={candidato.id}
+                >
+                  <div className="avatar">
+                    {candidato.nomeCompleto
+                      .charAt(0)
+                      .toUpperCase()}
+                  </div>
+
+                  <div className="dados-candidato">
+                    <strong>
+                      {candidato.nomeCompleto}
+                    </strong>
+
+                    <span>{candidato.email}</span>
+
+                    {candidato.areaInteresse && (
+                      <small>
+                        {candidato.areaInteresse}
+                      </small>
+                    )}
+                  </div>
+
+                  <div className="acoes-candidato">
+                    <span className="id-candidato">
+                      #{candidato.id}
+                    </span>
+
+                    <button
+                      type="button"
+                      className="botao-detalhes"
+                      onClick={() =>
+                        abrirDetalhes(candidato.id)
+                      }
+                      disabled={carregandoDetalhes}
+                    >
+                      Ver detalhes
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
       </main>
+
+      {candidatoSelecionado && (
+        <div
+          className="fundo-modal"
+          onClick={fecharDetalhes}
+        >
+          <section
+            className="modal-detalhes"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="cabecalho-modal">
+              <div>
+                <span className="modal-subtitulo">
+                  Candidato #{candidatoSelecionado.id}
+                </span>
+
+                <h2>
+                  {candidatoSelecionado.nomeCompleto}
+                </h2>
+              </div>
+
+              <button
+                type="button"
+                className="botao-fechar"
+                onClick={fecharDetalhes}
+                aria-label="Fechar detalhes"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="detalhes-candidato">
+              <div className="item-detalhe">
+                <span>E-mail</span>
+
+                <strong>
+                  {candidatoSelecionado.email}
+                </strong>
+              </div>
+
+              <div className="item-detalhe">
+                <span>Telefone</span>
+
+                <strong>
+                  {candidatoSelecionado.telefone ||
+                    "Não informado"}
+                </strong>
+              </div>
+
+              <div className="item-detalhe">
+                <span>Área ou cargo de interesse</span>
+
+                <strong>
+                  {candidatoSelecionado.areaInteresse ||
+                    "Não informado"}
+                </strong>
+              </div>
+
+              <div className="item-detalhe item-detalhe-completo">
+                <span>Resumo profissional</span>
+
+                <p>
+                  {candidatoSelecionado.resumoProfissional ||
+                    "Não informado"}
+                </p>
+              </div>
+            </div>
+
+            <div className="rodape-modal">
+              <button
+                type="button"
+                className="botao-fechar-modal"
+                onClick={fecharDetalhes}
+              >
+                Fechar
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
