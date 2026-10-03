@@ -118,4 +118,87 @@ Nem tudo que foi sugerido acabou sendo utilizado.
 
 Por exemplo, tentei primeiro usar LocalDB, mas a conexão com o Node não funcionou como esperado. Depois foi considerada a biblioteca `msnodesqlv8`, mas ela exigia outras ferramentas instaladas no computador e preferi não seguir com essa solução.
 
-Também chegamos a considerar separar
+Também chegamos a considerar separar a configuração do Express em mais arquivos para facilitar testes de integração. Como o objetivo era manter o projeto simples e isso aumentaria a estrutura apenas para os testes, preferi manter a organização que já estava funcionando.
+
+Outra decisão foi não tentar fazer uma extração muito complexa do currículo. Preferi trabalhar com regras simples para nome, e-mail e telefone e deixar claro que existem limitações.
+
+As sugestões da IA serviram como apoio, mas sempre testei as alterações no projeto antes de considerar uma solução pronta.
+
+## Como verifiquei se estava funcionando
+
+Durante o desenvolvimento fui testando cada etapa na prática.
+
+No backend, testei as rotas e acompanhei os erros pelo terminal. No frontend, testei o formulário e a importação pelo navegador.
+
+Também testei diretamente a conexão com o SQL Server antes de integrar o banco ao projeto.
+
+No final do desenvolvimento fiz uma nova verificação dos dois principais fluxos:
+
+1. cadastro utilizando um currículo em PDF;
+2. cadastro preenchido totalmente de forma manual.
+
+Os dois funcionaram corretamente.
+
+Também executei os testes automatizados com:
+
+```bash
+npm test
+```
+
+Os dois testes passaram.
+
+Por fim, executei o build do frontend:
+
+```bash
+npm run build
+```
+
+O Vite finalizou o build sem erros.
+
+## Limitações
+
+A principal limitação atual está na leitura dos currículos.
+
+A extração funciona melhor quando o PDF possui texto que pode ser selecionado e segue uma estrutura mais comum.
+
+Um currículo que seja somente uma imagem, por exemplo, não será interpretado corretamente porque não implementei OCR.
+
+Também podem existir formatos de currículo em que o nome, telefone ou outras informações não sejam identificados pelas regras atuais.
+
+Por esse motivo, mantive todos os campos editáveis e o cadastro manual sempre disponível.
+
+Outra limitação é que os testes automatizados ainda são simples e cobrem apenas a validação de e-mail. Com mais tempo seria interessante aumentar essa cobertura.
+
+## O que eu melhoraria com mais tempo
+
+Se tivesse mais tempo para continuar o projeto, algumas melhorias que eu faria seriam:
+
+- aumentar a quantidade de testes automatizados;
+- criar testes para as rotas da API;
+- melhorar a identificação das informações do currículo;
+- adicionar OCR para PDFs que sejam imagens;
+- adicionar busca e filtros na lista de candidatos;
+- permitir edição dos candidatos cadastrados;
+- melhorar algumas validações dos campos;
+- colocar a URL da API do frontend em variável de ambiente;
+- continuar melhorando a acessibilidade e a responsividade da interface.
+
+Preferi não colocar essas funcionalidades agora para não aumentar a complexidade além do necessário para o desafio.
+
+## Tempo de desenvolvimento
+
+O projeto foi desenvolvido em etapas, incluindo implementação, configuração do ambiente, testes e correções.
+
+Não marquei o tempo exato de todas as sessões. A configuração do SQL Server foi a etapa que levou mais tempo, principalmente por causa das tentativas com LocalDB antes de chegar à configuração final com SQL Server Express.
+
+Por não ter feito um controle exato das horas desde o início, preferi não colocar um número que não representasse corretamente o tempo utilizado.
+
+## Considerações finais
+
+Minha prioridade foi entregar o fluxo principal funcionando e manter o código de uma forma que eu conseguisse entender e explicar.
+
+Durante o desenvolvimento encontrei alguns problemas que fizeram com que eu mudasse parte das decisões iniciais, principalmente na configuração do banco de dados.
+
+No resultado final, o sistema permite cadastrar um candidato manualmente ou importar algumas informações de um currículo em PDF, revisar os dados antes de salvar, armazenar o cadastro no SQL Server e consultar os candidatos cadastrados.
+
+Também procurei documentar as limitações e as decisões tomadas durante o desenvolvimento, inclusive o uso de inteligência artificial como ferramenta de apoio.
