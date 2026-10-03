@@ -44,7 +44,6 @@ Caso a leitura do PDF não seja possível, o candidato ainda pode realizar o cad
 ### Testes
 
 - Jest
-- Supertest
 
 ## Estrutura do projeto
 
